@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
-20.times do |number|
-  number += 1
+(1..20).each do |number|
   if number % 15 == 0
     puts 'FizzBuzz'
   elsif number % 3 == 0
