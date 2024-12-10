@@ -2,7 +2,7 @@
 require 'date'
 require 'optparse'
 
-class Calender
+class Calendar
   def initialize(year, month)
     @year = year
     @month = month
@@ -46,4 +46,4 @@ opt.parse!(ARGV)
 month = option[:m] ? option[:m].to_i : Date.today.month
 year = option[:y] ? option[:y].to_i : Date.today.year
 
-puts Calender.new(year, month).generate
+puts Calendar.new(year, month).generate
