@@ -12,6 +12,8 @@ class Calendar
     [generate_header, generate_body].join("\n")
   end
 
+  private
+
   def generate_header
     first_row = "      #{@month}月 #{@year}"
     second_row = "日 月 火 水 木 金 土"
