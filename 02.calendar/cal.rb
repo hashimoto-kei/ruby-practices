@@ -25,15 +25,15 @@ class Calendar
   end
 
   def generate_blank
-    first_day = Date.new(@year, @month, 1)
-    blank_days = Array.new(first_day.wday, "   ")
+    first_date = Date.new(@year, @month, 1)
+    blank_days = Array.new(first_date.wday, "   ")
     blank_days.join
   end
 
   def generate_days
-    first_day = Date.new(@year, @month, 1)
-    last_day = Date.new(@year, @month, -1)
-    (first_day..last_day).map do |date|
+    first_date = Date.new(@year, @month, 1)
+    last_date = Date.new(@year, @month, -1)
+    (first_date..last_date).map do |date|
       date.day.to_s.rjust(2) + (date.saturday? ? "\n" : " ")
     end.join
   end
