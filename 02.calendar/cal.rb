@@ -10,7 +10,7 @@ class Calendar
   end
 
   def generate
-    [generate_header, generate_body].join("\n")
+    [*generate_header, generate_body].join("\n")
   end
 
   private
@@ -18,7 +18,7 @@ class Calendar
   def generate_header
     first_row = "      #{@month}月 #{@year}"
     second_row = "日 月 火 水 木 金 土"
-    [first_row, second_row].join("\n")
+    [first_row, second_row]
   end
 
   def generate_body
