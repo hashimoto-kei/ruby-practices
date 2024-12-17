@@ -10,7 +10,9 @@ class Calendar
   end
 
   def generate
-    [*generate_header, *generate_body].join("\n")
+    header = generate_header
+    body = generate_body
+    [*header, *body].join("\n")
   end
 
   private
@@ -22,8 +24,9 @@ class Calendar
   end
 
   def generate_body
+    blank = generate_blank
     days = generate_days
-    [generate_blank + days[0], *days[1..]]
+    [blank + days[0], *days[1..]]
   end
 
   def generate_blank
