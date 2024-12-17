@@ -4,8 +4,8 @@ require 'optparse'
 
 class Calendar
   def initialize(year, month)
-    @year = year
-    @month = month
+    @year = year ? year.to_i : Date.today.year
+    @month = month ? month.to_i : Date.today.month
   end
 
   def generate
@@ -45,7 +45,4 @@ opt.on('-m month') {|v| option[:m] = v}
 opt.on('-y year') {|v| option[:y] = v}
 opt.parse!(ARGV)
 
-month = option[:m] ? option[:m].to_i : Date.today.month
-year = option[:y] ? option[:y].to_i : Date.today.year
-
-puts Calendar.new(year, month).generate
+puts Calendar.new(option[:y], option[:m]).generate
