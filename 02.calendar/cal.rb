@@ -34,7 +34,7 @@ class Calendar
     first_day = Date.new(@year, @month, 1)
     last_day = Date.new(@year, @month, -1)
     (first_day..last_day).map do |date|
-      date.day.to_s.rjust(2) + (date.wday == 6 ? "\n" : " ")
+      date.day.to_s.rjust(2) + (date.saturday? ? "\n" : " ")
     end.join
   end
 end
