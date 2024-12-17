@@ -10,7 +10,7 @@ class Calendar
   end
 
   def generate
-    [*generate_header, generate_body].join("\n")
+    [*generate_header, *generate_body].join("\n")
   end
 
   private
@@ -22,7 +22,8 @@ class Calendar
   end
 
   def generate_body
-    generate_blank + generate_days
+    days = generate_days
+    [generate_blank + days[0], *days[1..]]
   end
 
   def generate_blank
@@ -32,9 +33,11 @@ class Calendar
 
   def generate_days
     last_date = Date.new(@year, @month, -1)
-    (@first_date..last_date).map do |date|
-      date.day.to_s.rjust(2) + (date.saturday? ? "\n" : " ")
-    end.join
+    (@first_date..last_date).chunk_while do |date|
+      !date.saturday?
+    end.map do |dates|
+      dates.map{|date| date.day.to_s.rjust(2)}.join(' ')
+    end
   end
 end
 
