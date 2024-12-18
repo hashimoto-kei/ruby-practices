@@ -26,7 +26,7 @@ class Calendar
     first_date = Date.new(@year, @month, 1)
     last_date = Date.new(@year, @month, -1)
 
-    rows = (first_date..last_date).slice_when {|date| date.saturday? }
+    rows = (first_date..last_date).slice_when {|date| date.saturday?}
     first_row, *other_rows = rows.map do |row|
       row.map{|date| date.day.to_s.rjust(2)}.join(' ')
     end
