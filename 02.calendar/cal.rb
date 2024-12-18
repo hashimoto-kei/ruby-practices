@@ -25,8 +25,8 @@ class Calendar
 
   def generate_body
     blank = "   " * @first_date.wday
-    days = generate_days
-    [blank + days[0], *days[1..]]
+    first_row, *other_rows = generate_days
+    [blank + first_row, *other_rows]
   end
 
   def generate_days
