@@ -24,17 +24,15 @@ class Calendar
   end
 
   def generate_body
-    blank = "   " * @first_date.wday
-    first_row, *other_rows = generate_days
-    [blank + first_row, *other_rows]
-  end
-
-  def generate_days
     last_date = Date.new(@year, @month, -1)
+
     rows = (@first_date..last_date).slice_when {|date| date.saturday? }
-    rows.map do |row|
+    first_row, *other_rows = rows.map do |row|
       row.map{|date| date.day.to_s.rjust(2)}.join(' ')
     end
+
+    blank = "   " * @first_date.wday
+    [blank + first_row, *other_rows]
   end
 end
 
