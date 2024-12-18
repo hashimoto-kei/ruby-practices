@@ -31,10 +31,11 @@ class Calendar
 
   def generate_days
     last_date = Date.new(@year, @month, -1)
-    (@first_date..last_date).chunk_while do |date|
+    rows = (@first_date..last_date).chunk_while do |date|
       !date.saturday?
-    end.map do |dates|
-      dates.map{|date| date.day.to_s.rjust(2)}.join(' ')
+    end
+    rows.map do |row|
+      row.map{|date| date.day.to_s.rjust(2)}.join(' ')
     end
   end
 end
