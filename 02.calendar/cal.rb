@@ -6,7 +6,6 @@ class Calendar
   def initialize(year, month)
     @year = year ? year.to_i : Date.today.year
     @month = month ? month.to_i : Date.today.month
-    @first_date = Date.new(@year, @month, 1)
   end
 
   def generate
@@ -24,14 +23,15 @@ class Calendar
   end
 
   def generate_body
+    first_date = Date.new(@year, @month, 1)
     last_date = Date.new(@year, @month, -1)
 
-    rows = (@first_date..last_date).slice_when {|date| date.saturday? }
+    rows = (first_date..last_date).slice_when {|date| date.saturday? }
     first_row, *other_rows = rows.map do |row|
       row.map{|date| date.day.to_s.rjust(2)}.join(' ')
     end
 
-    blank = "   " * @first_date.wday
+    blank = "   " * first_date.wday
     [blank + first_row, *other_rows]
   end
 end
