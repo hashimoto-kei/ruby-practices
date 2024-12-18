@@ -31,9 +31,7 @@ class Calendar
 
   def generate_days
     last_date = Date.new(@year, @month, -1)
-    rows = (@first_date..last_date).slice_when do |date|
-      date.saturday?
-    end
+    rows = (@first_date..last_date).slice_when {|date| date.saturday? }
     rows.map do |row|
       row.map{|date| date.day.to_s.rjust(2)}.join(' ')
     end
