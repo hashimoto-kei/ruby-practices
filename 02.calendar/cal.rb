@@ -30,8 +30,7 @@ class Calendar
   end
 
   def generate_blank
-    blank_days = Array.new(@first_date.wday, "   ")
-    blank_days.join
+    "   " * @first_date.wday
   end
 
   def generate_days
