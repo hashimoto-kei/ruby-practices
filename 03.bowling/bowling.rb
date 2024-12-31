@@ -7,9 +7,9 @@ ALL_FRAMES = 10
 class Frame
   attr_accessor :next
 
-  def initialize(is_last: false)
+  def initialize(final: false)
     @shots = []
-    @is_last = is_last
+    @final = final
   end
 
   def <<(shot)
@@ -21,7 +21,7 @@ class Frame
   end
 
   def filled?
-    if @is_last
+    if @final
       max_rolls = (strike? || spare? ? 3 : 2)
       rolls == max_rolls
     else
@@ -90,8 +90,8 @@ class Bowling
       next unless frame.filled?
 
       frames << frame
-      is_last = (frames.length == ALL_FRAMES - 1)
-      new_frame = Frame.new(is_last: is_last)
+      final = (frames.length == ALL_FRAMES - 1)
+      new_frame = Frame.new(final: final)
       frame.next = new_frame
       frame = new_frame
     end
