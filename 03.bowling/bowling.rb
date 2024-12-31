@@ -3,6 +3,7 @@
 
 ALL_PINS = 10
 ALL_FRAMES = 10
+MAX_ROLLS = 2
 
 class Frame
   attr_accessor :next
@@ -21,12 +22,10 @@ class Frame
   end
 
   def filled?
-    if @final
-      max_rolls = (strike? || spare? ? 3 : 2)
-      rolls == max_rolls
+    if @final && (strike? || spare?)
+      rolls == MAX_ROLLS + 1
     else
-      max_rolls = 2
-      strike? || rolls == max_rolls
+      strike? || rolls == MAX_ROLLS
     end
   end
 
