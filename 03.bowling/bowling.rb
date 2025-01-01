@@ -99,9 +99,9 @@ class Bowling
       final = (frames.length == ALL_FRAMES - 1)
       klass = final ? FinalFrame : Frame
       new_frame = klass.new
+      frames << new_frame
       frame.next = new_frame
       frame = new_frame
-      frames << frame
     end
     frames
   end
