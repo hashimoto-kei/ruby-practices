@@ -89,18 +89,19 @@ class Bowling
   private
 
   def to_frames(shots)
-    frames = []
     frame = Frame.new
+    frames = [frame]
     shots.each do |shot|
       frame << shot
       next unless frame.filled?
+      break if frames.length == ALL_FRAMES
 
-      frames << frame
       final = (frames.length == ALL_FRAMES - 1)
       klass = final ? FinalFrame : Frame
       new_frame = klass.new
       frame.next = new_frame
       frame = new_frame
+      frames << frame
     end
     frames
   end
