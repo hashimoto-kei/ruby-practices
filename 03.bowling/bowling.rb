@@ -4,6 +4,7 @@
 ALL_PINS = 10
 ALL_FRAMES = 10
 MAX_ROLLS = 2
+BONUS_ROLL = 1
 
 class Frame
   attr_accessor :next
@@ -69,11 +70,8 @@ class FinalFrame < Frame
   end
 
   def filled?
-    if strike? || spare?
-      rolls == MAX_ROLLS + 1
-    else
-      rolls == MAX_ROLLS
-    end
+    bonus = (strike? || spare? ? BONUS_ROLL : 0)
+    rolls == MAX_ROLLS + bonus
   end
 end
 
