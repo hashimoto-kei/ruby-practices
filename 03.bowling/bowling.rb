@@ -17,7 +17,7 @@ class Frame
   end
 
   def score
-    @shots.sum + bonus
+    @shots.sum + bonus_pins
   end
 
   def filled?
@@ -46,7 +46,7 @@ class Frame
     !strike? && (first_shot + second_shot == ALL_PINS)
   end
 
-  def bonus
+  def bonus_pins
     if strike?
       next_two_shots.sum
     elsif spare?
