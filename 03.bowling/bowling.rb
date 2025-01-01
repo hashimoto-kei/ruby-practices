@@ -8,9 +8,8 @@ MAX_ROLLS = 2
 class Frame
   attr_accessor :next
 
-  def initialize(final: false)
+  def initialize
     @shots = []
-    @final = final
   end
 
   def <<(shot)
@@ -22,11 +21,7 @@ class Frame
   end
 
   def filled?
-    if @final && (strike? || spare?)
-      rolls == MAX_ROLLS + 1
-    else
-      strike? || rolls == MAX_ROLLS
-    end
+    strike? || rolls == MAX_ROLLS
   end
 
   def first_shot
@@ -68,6 +63,20 @@ class Frame
   end
 end
 
+class FinalFrame < Frame
+  def score
+    @shots.sum
+  end
+
+  def filled?
+    if strike? || spare?
+      rolls == MAX_ROLLS + 1
+    else
+      rolls == MAX_ROLLS
+    end
+  end
+end
+
 class Bowling
   def initialize(scores)
     @scores = scores
@@ -90,7 +99,8 @@ class Bowling
 
       frames << frame
       final = (frames.length == ALL_FRAMES - 1)
-      new_frame = Frame.new(final: final)
+      clazz = final ? FinalFrame : Frame
+      new_frame = clazz.new
       frame.next = new_frame
       frame = new_frame
     end
