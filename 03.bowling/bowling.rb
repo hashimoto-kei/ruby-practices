@@ -77,13 +77,12 @@ end
 
 class Bowling
   def initialize(scores)
-    @scores = scores
+    shots = scores.map { |score| score == 'X' ? ALL_PINS : score.to_i }
+    @frames = generate_frames(shots)
   end
 
   def total_score
-    shots = @scores.map { |score| score == 'X' ? ALL_PINS : score.to_i }
-    frames = generate_frames(shots)
-    frames.map(&:score).sum
+    @frames.map(&:score).sum
   end
 
   private
