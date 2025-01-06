@@ -8,8 +8,7 @@ class Bowling
   ALL_FRAMES = 10
 
   def initialize(scores)
-    shots = scores.map { |score| score == 'X' ? Frame::ALL_PINS : score.to_i }
-    @frames = generate_frames(shots)
+    @frames = generate_frames(scores)
   end
 
   def total_score
@@ -18,11 +17,11 @@ class Bowling
 
   private
 
-  def generate_frames(shots)
+  def generate_frames(scores)
     frame = Frame.new
     frames = [frame]
-    shots.each do |shot|
-      frame.add(shot)
+    scores.each do |score|
+      frame.add(score)
       next unless frame.filled?
       break if frames.length == ALL_FRAMES
 

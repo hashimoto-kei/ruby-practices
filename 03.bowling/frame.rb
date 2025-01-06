@@ -8,7 +8,8 @@ class Frame
     @shots = []
   end
 
-  def add(shot)
+  def add(score)
+    shot = (score == 'X' ? ALL_PINS : score.to_i)
     @shots << shot
   end
 
