@@ -1,12 +1,10 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-ALL_PINS = 10
-ALL_FRAMES = 10
-MAX_ROLLS = 2
-BONUS_ROLL = 1
-
 class Frame
+  ALL_PINS = 10
+  MAX_ROLLS = 2
+
   attr_accessor :next
 
   def initialize
@@ -65,6 +63,8 @@ class Frame
 end
 
 class FinalFrame < Frame
+  BONUS_ROLL = 1
+
   def score
     @shots.sum
   end
@@ -76,8 +76,10 @@ class FinalFrame < Frame
 end
 
 class Bowling
+  ALL_FRAMES = 10
+
   def initialize(scores)
-    shots = scores.map { |score| score == 'X' ? ALL_PINS : score.to_i }
+    shots = scores.map { |score| score == 'X' ? Frame::ALL_PINS : score.to_i }
     @frames = generate_frames(shots)
   end
 
