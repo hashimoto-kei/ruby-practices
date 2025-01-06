@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require_relative './frame'
-require_relative './last_frame'
+require_relative './final_frame'
 
 class Bowling
   ALL_FRAMES = 10
