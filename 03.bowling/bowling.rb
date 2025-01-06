@@ -13,7 +13,7 @@ class Frame
     @shots = []
   end
 
-  def <<(shot)
+  def add(shot)
     @shots << shot
   end
 
@@ -82,17 +82,17 @@ class Bowling
 
   def total_score
     shots = @scores.map { |score| score == 'X' ? ALL_PINS : score.to_i }
-    frames = to_frames(shots)
+    frames = generate_frames(shots)
     frames.map(&:score).sum
   end
 
   private
 
-  def to_frames(shots)
+  def generate_frames(shots)
     frame = Frame.new
     frames = [frame]
     shots.each do |shot|
-      frame << shot
+      frame.add(shot)
       next unless frame.filled?
       break if frames.length == ALL_FRAMES
 
