@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FinalFrame < Frame
   BONUS_ROLL = 1
 

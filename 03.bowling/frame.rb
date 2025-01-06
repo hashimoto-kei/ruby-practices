@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Frame
   ALL_PINS = 10
   MAX_ROLLS = 2
