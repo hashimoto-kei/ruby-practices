@@ -84,12 +84,13 @@ class Entry
   end
 
   def to_timestamp(mtime)
-    mtime.to_s.gsub(/(\d{4})-(\d)(\d)-(\d{2}) (\d{2}:\d{2}).*/) do
-      day = ($2 == '0' ? " #{$3}" : "#{$2}#{$3}")
+    mtime.to_s.gsub(/(\d{4})-(\d)(\d)-(\d)(\d) (\d{2}:\d{2}).*/) do
+      month = ($2 == '0' ? " #{$3}" : "#{$2}#{$3}")
+      day = ($4 == '0' ? " #{$5}" : "#{$4}#{$5}")
       if $1 == Date.today.year.to_s
-        "#{day} #{$4} #{$5}"
+        "#{month} #{day} #{$6}"
       else
-        "#{day} #{$4} #{$1}"
+        "#{month} #{day} #{$1}"
       end
     end
   end
