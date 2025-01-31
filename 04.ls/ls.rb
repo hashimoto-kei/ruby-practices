@@ -11,7 +11,7 @@ class Entry
     @order = order
   end
 
-  def to_s(l_option)
+  def to_s(l_option, digits)
     if !l_option
       @path
     else
@@ -23,7 +23,7 @@ class Entry
       group_name = Etc.getgrgid(stat.gid).name
       timestamp = to_timestamp(stat.mtime)
       symbolic_link = " -> #{File.readlink(@path)}" if file_type == 'l'
-      "#{file_type}#{permissions} #{stat.nlink.to_s.rjust(2)} #{user_name}  #{group_name}  #{stat.size.to_s.rjust(4)} #{timestamp} #{@path}#{symbolic_link}"
+      "#{file_type}#{permissions}  #{stat.nlink.to_s.rjust(digits)} #{user_name}  #{group_name}  #{stat.size.to_s.rjust(4)} #{timestamp} #{@path}#{symbolic_link}"
     end
   end
 
@@ -37,6 +37,10 @@ class Entry
 
   def blocks
     File.lstat(@path).blocks
+  end
+
+  def nlink
+    File.lstat(@path).nlink
   end
 
   private
@@ -107,8 +111,9 @@ class LsCommand
     matrix = entries.slice_when { |entry| entry.order % rows == 0 }
     matrix = matrix.to_a
     matrix[-1] << BLANK until matrix[-1].size % rows == 0
+    digits = entries.map(&:nlink).max.digits.size
     rows = matrix.transpose.map do |row|
-      infos = row.map { |entry| entry.to_s(@option[:l]) }
+      infos = row.map { |entry| entry.to_s(@option[:l], digits) }
       infos = infos.map {|info| info.ljust(10) }
       infos.join("\t")
     end
