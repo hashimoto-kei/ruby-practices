@@ -3,7 +3,6 @@
 
 require 'date'
 require 'etc'
-require 'optparse'
 
 class Entry
   def initialize(path='', order=nil)

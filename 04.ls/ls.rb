@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'date'
-require 'etc'
 require 'optparse'
 require_relative 'lib/ls_command'
 
