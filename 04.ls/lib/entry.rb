@@ -8,10 +8,9 @@ class Entry
   attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :timestamp, :blocks, :symbolic_link
 
   def initialize(path='', long_format=false)
-    @path = path
     @file_name = File.basename(path)
     if long_format
-      stat = File.lstat(@path)
+      stat = File.lstat(path)
       @file_type = to_file_type(stat.ftype)
       mode = stat.mode.to_s(8).rjust(6, '0')
       @permissions = to_permissions(mode[-3..-1])
@@ -21,7 +20,7 @@ class Entry
       @size = stat.size
       @timestamp = to_timestamp(stat.mtime)
       @blocks = stat.blocks
-      @symbolic_link = " -> #{File.readlink(@path)}" if @file_type == 'l'
+      @symbolic_link = " -> #{File.readlink(path)}" if @file_type == 'l'
     end
   end
 
