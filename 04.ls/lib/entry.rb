@@ -5,10 +5,9 @@ require 'date'
 require 'etc'
 
 class Entry
-  def initialize(path='', order=nil)
+  def initialize(path='')
     @path = path
     @file_name = File.basename(path)
-    @order = order
   end
 
   def to_s(l_option, digits, size_length)
@@ -29,10 +28,6 @@ class Entry
 
   def file_name
     @file_name
-  end
-
-  def order
-    @order
   end
 
   def blocks

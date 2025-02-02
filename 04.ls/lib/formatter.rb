@@ -10,8 +10,7 @@ class Formatter
   def self.format(entries)
     max_file_name_length = entries.map(&:file_name).map(&:length).max
     rows = ((entries.size - 1) / MAX_COLUMNS) + 1
-    matrix = entries.slice_when { |entry| entry.order % rows == 0 }
-    matrix = matrix.to_a
+    matrix = entries.each_slice(rows).to_a
     matrix[-1] << BLANK until matrix[-1].size % rows == 0
     matrix = matrix.map do |column|
       column.map(&:file_name).map{ |file_name| file_name.ljust(max_file_name_length) }
