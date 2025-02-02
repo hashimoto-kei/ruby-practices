@@ -6,6 +6,7 @@ require 'etc'
 
 class Entry
   attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :timestamp, :blocks, :symbolic_link
+
   def initialize(path='', long_format=false)
     @path = path
     @file_name = File.basename(path)
