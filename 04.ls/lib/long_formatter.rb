@@ -10,8 +10,7 @@ class LongFormatter
     rows = entries.map do |entry|
       "#{entry.file_type}#{entry.permissions}  #{entry.nlink.to_s.rjust(max_nlink_digits)} #{entry.user_name}  #{entry.group_name}  #{entry.size.to_s.rjust(max_size_digits)} #{entry.timestamp} #{entry.file_name}#{entry.symbolic_link}"
     end
-    total = entries.map(&:blocks).sum
-    rows = ["total #{total}", *rows]
-    rows.join("\n")
+    total_blocks = entries.map(&:blocks).sum
+    ["total #{total_blocks}", *rows].join("\n")
   end
 end
