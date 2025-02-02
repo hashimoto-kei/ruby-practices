@@ -4,12 +4,7 @@
 require 'optparse'
 require_relative 'lib/ls_command'
 
-option = Hash.new(false)
-opt = OptionParser.new
-opt.on('-a') { option[:a] = true }
-opt.on('-r') { option[:r] = true }
-opt.on('-l') { option[:l] = true }
-opt.parse!(ARGV)
+option = ARGV.getopts('a', 'r', 'l').transform_keys {|key| key.to_sym }
 path = ARGV[0]
 
 puts LsCommand.new(option, path).execute
