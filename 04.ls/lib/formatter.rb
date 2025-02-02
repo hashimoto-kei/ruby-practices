@@ -10,10 +10,9 @@ class Formatter
   def self.format(entries)
     max_file_name_length = entries.map(&:file_name).map(&:length).max
     file_names = entries.map(&:file_name).map { |file_name| file_name.ljust(max_file_name_length) }
-    rows = ((file_names.size - 1) / MAX_COLUMNS) + 1
-    matrix = file_names.each_slice(rows).to_a
-    matrix[-1] << BLANK until matrix[-1].size % rows == 0
-    rows = matrix.transpose.map { |row| row.join("\t") }
+    file_names << BLANK until file_names.size % MAX_COLUMNS == 0
+    rows = file_names.size / MAX_COLUMNS
+    rows = file_names.each_slice(rows).to_a.transpose.map { |row| row.join("\t") }
     rows.join("\n")
   end
 end
