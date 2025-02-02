@@ -5,9 +5,15 @@ require 'date'
 require 'etc'
 
 class Entry
-  def initialize(path='')
+  def initialize(path='', long_format=false)
     @path = path
     @file_name = File.basename(path)
+    if long_format
+      lstat = File.lstat(@path)
+      @blocks = lstat.blocks
+      @nlink = lstat.nlink
+      @size = lstat.size
+    end
   end
 
   def to_s(l_option, digits, size_length)
@@ -31,15 +37,15 @@ class Entry
   end
 
   def blocks
-    File.lstat(@path).blocks
+    @blocks
   end
 
   def nlink
-    File.lstat(@path).nlink
+    @nlink
   end
 
   def size
-    File.lstat(@path).size
+    @size
   end
 
   private

@@ -22,7 +22,7 @@ class LsCommand
     entries = Dir.entries(@path).sort
     entries.filter! { |entry| entry !~ /^\..*/ } unless @option[:a]
     entries.reverse! if @option[:r]
-    entries = entries.map { |file_name| Entry.new("#{@path}/#{file_name}") }
+    entries = entries.map { |file_name| Entry.new("#{@path}/#{file_name}", @option[:l]) }
     entries.to_a
   end
 end
