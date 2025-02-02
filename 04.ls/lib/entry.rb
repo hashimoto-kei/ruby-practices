@@ -5,47 +5,23 @@ require 'date'
 require 'etc'
 
 class Entry
+  attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :timestamp, :blocks, :symbolic_link
   def initialize(path='', long_format=false)
     @path = path
     @file_name = File.basename(path)
     if long_format
-      lstat = File.lstat(@path)
-      @blocks = lstat.blocks
-      @nlink = lstat.nlink
-      @size = lstat.size
-    end
-  end
-
-  def to_s(l_option, digits, size_length)
-    if !l_option
-      @file_name
-    else
       stat = File.lstat(@path)
-      file_type = to_file_type(stat.ftype)
+      @file_type = to_file_type(stat.ftype)
       mode = stat.mode.to_s(8).rjust(6, '0')
-      permissions = to_permissions(mode[-3..-1])
-      user_name = Etc.getpwuid(stat.uid).name
-      group_name = Etc.getgrgid(stat.gid).name
-      timestamp = to_timestamp(stat.mtime)
-      symbolic_link = " -> #{File.readlink(@path)}" if file_type == 'l'
-      "#{file_type}#{permissions}  #{stat.nlink.to_s.rjust(digits)} #{user_name}  #{group_name}  #{stat.size.to_s.rjust(size_length)} #{timestamp} #{@file_name}#{symbolic_link}"
+      @permissions = to_permissions(mode[-3..-1])
+      @nlink = stat.nlink
+      @user_name = Etc.getpwuid(stat.uid).name
+      @group_name = Etc.getgrgid(stat.gid).name
+      @size = stat.size
+      @timestamp = to_timestamp(stat.mtime)
+      @blocks = stat.blocks
+      @symbolic_link = " -> #{File.readlink(@path)}" if @file_type == 'l'
     end
-  end
-
-  def file_name
-    @file_name
-  end
-
-  def blocks
-    @blocks
-  end
-
-  def nlink
-    @nlink
-  end
-
-  def size
-    @size
   end
 
   private
