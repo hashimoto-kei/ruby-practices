@@ -2,11 +2,10 @@
 # frozen_string_literal: true
 
 require_relative 'entry'
+require_relative 'formatter'
+require_relative 'long_formatter'
 
 class LsCommand
-  MAX_COLUMNS = 3
-  BLANK = Entry.new
-
   def initialize(option, path)
     path ||= '.'
     @path = File.expand_path(path)
@@ -15,21 +14,8 @@ class LsCommand
 
   def execute
     entries = create_entries
-    columns = (@option[:l] ? 1 : MAX_COLUMNS)
-    rows = (entries.size - 1) / columns + 1
-    matrix = entries.slice_when { |entry| entry.order % rows == 0 }
-    matrix = matrix.to_a
-    matrix[-1] << BLANK until matrix[-1].size % rows == 0
-    digits = entries.map(&:nlink).max.digits.size
-    size = entries.map(&:size).max.digits.size
-    rows = matrix.transpose.map do |row|
-      infos = row.map { |entry| entry.to_s(@option[:l], digits, size) }
-      infos = infos.map {|info| info.ljust(10) }
-      infos.join("\t")
-    end
-    total = entries.map(&:blocks).sum
-    rows = ["total #{total}", *rows] if @option[:l]
-    rows.join("\n")
+    formatter = (@option[:l] ? LongFormatter : Formatter)
+    formatter.format(entries)
   end
 
   def create_entries
