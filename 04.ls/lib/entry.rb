@@ -5,7 +5,7 @@ require 'date'
 require 'etc'
 
 class Entry
-  attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :timestamp, :blocks, :symbolic_link
+  attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :timestamp, :blocks, :link_name
 
   def initialize(path='', long_format=false)
     @file_name = File.basename(path)
@@ -19,8 +19,8 @@ class Entry
       @group_name = Etc.getgrgid(stat.gid).name
       @size = stat.size
       @timestamp = to_timestamp(stat.mtime)
+      @link_name = File.readlink(path) if @file_type == 'l'
       @blocks = stat.blocks
-      @symbolic_link = " -> #{File.readlink(path)}" if @file_type == 'l'
     end
   end
 
