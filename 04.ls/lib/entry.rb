@@ -5,7 +5,7 @@ require 'date'
 require 'etc'
 
 class Entry
-  attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :timestamp, :blocks, :link_name
+  attr_reader :file_name, :file_type, :permissions, :nlink, :user_name, :group_name, :size, :month, :day, :time, :blocks, :link_name
 
   def initialize(path='', long_format=false)
     @file_name = File.basename(path)
@@ -18,7 +18,10 @@ class Entry
       @user_name = Etc.getpwuid(stat.uid).name
       @group_name = Etc.getgrgid(stat.gid).name
       @size = stat.size
-      @timestamp = to_timestamp(stat.mtime)
+      timestamp = to_timestamp(stat.mtime)
+      @month = timestamp[:month]
+      @day = timestamp[:day]
+      @time = timestamp[:time]
       @link_name = File.readlink(path) if @file_type == 'l'
       @blocks = stat.blocks
     end
@@ -65,14 +68,11 @@ class Entry
   end
 
   def to_timestamp(mtime)
-    mtime.to_s.gsub(/(\d{4})-(\d)(\d)-(\d)(\d) (\d{2}:\d{2}).*/) do
+    mtime.to_s.match(/(\d{4})-(\d)(\d)-(\d)(\d) (\d{2}:\d{2}).*/) do |e|
       month = ($2 == '0' ? " #{$3}" : "#{$2}#{$3}")
       day = ($4 == '0' ? " #{$5}" : "#{$4}#{$5}")
-      if $1 == Date.today.year.to_s
-        "#{month} #{day} #{$6}"
-      else
-        "#{month} #{day} #{$1}"
-      end
+      time = (Time.now - mtime > 60 * 60 * 24 * 182 ? $1 : $6)
+      {month: month, day: day, time: time}
     end
   end
 end

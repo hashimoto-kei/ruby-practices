@@ -7,8 +7,9 @@ class LongFormatter
   def self.format(entries)
     max_nlink_digits = entries.map(&:nlink).max.digits.size
     max_size_digits = entries.map(&:size).max.digits.size
+    max_time_length = entries.map(&:time).map(&:length).max
     rows = entries.map do |entry|
-      row = "#{entry.file_type}#{entry.permissions}  #{entry.nlink.to_s.rjust(max_nlink_digits)} #{entry.user_name}  #{entry.group_name}  #{entry.size.to_s.rjust(max_size_digits)} #{entry.timestamp} #{entry.file_name}"
+      row = "#{entry.file_type}#{entry.permissions}  #{entry.nlink.to_s.rjust(max_nlink_digits)} #{entry.user_name}  #{entry.group_name}  #{entry.size.to_s.rjust(max_size_digits)} #{entry.month} #{entry.day} #{entry.time.rjust(max_time_length)} #{entry.file_name}"
       entry.link_name.nil? ? row : "#{row} -> #{entry.link_name}"
     end
     total_blocks = entries.map(&:blocks).sum
