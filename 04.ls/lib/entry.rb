@@ -5,10 +5,9 @@ require 'date'
 require 'etc'
 
 class Entry
-  def initialize(path='', file_name='', order=nil)
+  def initialize(path='', order=nil)
     @path = path
-    @file_name = file_name
-    @file_path = "#{@path}/#{@file_name}"
+    @file_name = File.basename(path)
     @order = order
   end
 
@@ -16,14 +15,14 @@ class Entry
     if !l_option
       @file_name
     else
-      stat = File.lstat(@file_path)
+      stat = File.lstat(@path)
       file_type = to_file_type(stat.ftype)
       mode = stat.mode.to_s(8).rjust(6, '0')
       permissions = to_permissions(mode[-3..-1])
       user_name = Etc.getpwuid(stat.uid).name
       group_name = Etc.getgrgid(stat.gid).name
       timestamp = to_timestamp(stat.mtime)
-      symbolic_link = " -> #{File.readlink(@file_path)}" if file_type == 'l'
+      symbolic_link = " -> #{File.readlink(@path)}" if file_type == 'l'
       "#{file_type}#{permissions}  #{stat.nlink.to_s.rjust(digits)} #{user_name}  #{group_name}  #{stat.size.to_s.rjust(size_length)} #{timestamp} #{@file_name}#{symbolic_link}"
     end
   end
@@ -37,15 +36,15 @@ class Entry
   end
 
   def blocks
-    File.lstat(@file_path).blocks
+    File.lstat(@path).blocks
   end
 
   def nlink
-    File.lstat(@file_path).nlink
+    File.lstat(@path).nlink
   end
 
   def size
-    File.lstat(@file_path).size
+    File.lstat(@path).size
   end
 
   private

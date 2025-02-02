@@ -36,7 +36,7 @@ class LsCommand
     entries = Dir.entries(File.expand_path(@path)).sort
     entries.filter! { |entry| entry !~ /^\..*/ } unless @option[:a]
     entries.reverse! if @option[:r]
-    entries = entries.map.with_index(1) { |file_name, order| Entry.new(@path, file_name, order) }
+    entries = entries.map.with_index(1) { |file_name, order| Entry.new("#{@path}/#{file_name}", order) }
     entries.to_a
   end
 end
