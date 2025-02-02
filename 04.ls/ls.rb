@@ -12,4 +12,4 @@ opt.on('-l') { option[:l] = true }
 opt.parse!(ARGV)
 path = ARGV[0]
 
-puts LsCommand.new(path, option).execute
+puts LsCommand.new(option, path).execute

@@ -7,8 +7,9 @@ class LsCommand
   MAX_COLUMNS = 3
   BLANK = Entry.new
 
-  def initialize(path, option)
-    @path = path.nil? ? '.' : path
+  def initialize(option, path)
+    path ||= '.'
+    @path = File.expand_path(path)
     @option = option
   end
 
@@ -26,7 +27,6 @@ class LsCommand
       infos = infos.map {|info| info.ljust(10) }
       infos.join("\t")
     end
-    #total = entries.filter { |entry| entry.path !~ /^\..*/ }.map(&:size).sum / 512
     total = entries.map(&:blocks).sum
     rows = ["total #{total}", *rows] if @option[:l]
     rows.join("\n")
@@ -36,7 +36,7 @@ class LsCommand
     entries = Dir.entries(File.expand_path(@path)).sort
     entries.filter! { |entry| entry !~ /^\..*/ } unless @option[:a]
     entries.reverse! if @option[:r]
-    entries = entries.map.with_index(1) { |path, order| Entry.new(path, order) }
+    entries = entries.map.with_index(1) { |file_name, order| Entry.new(@path, file_name, order) }
     entries.to_a
   end
 end
