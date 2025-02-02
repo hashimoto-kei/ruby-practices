@@ -11,8 +11,8 @@ class Formatter
     max_file_name_length = entries.map(&:file_name).map(&:length).max
     file_names = entries.map(&:file_name).map { |file_name| file_name.ljust(max_file_name_length) }
     file_names << BLANK until file_names.size % MAX_COLUMNS == 0
-    rows = file_names.size / MAX_COLUMNS
-    rows = file_names.each_slice(rows).to_a.transpose.map { |row| row.join("\t") }
+    row_number = file_names.size / MAX_COLUMNS
+    rows = file_names.each_slice(row_number).to_a.transpose.map { |row| row.join("\t") }
     rows.join("\n")
   end
 end
