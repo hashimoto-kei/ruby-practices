@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'entry'
-
 class Formatter
   MAX_COLUMNS = 3
   BLANK = nil
