@@ -7,7 +7,7 @@ class Entry
     @file_name = File.basename(path)
   end
 
-  def not_hidden?
-    @file_name !~ /^\..*/
+  def hidden?
+    @file_name =~ /^\..*/
   end
 end
