@@ -4,13 +4,13 @@ module LS
 end
 
 class LS::File
-  attr_reader :file_name
+  attr_reader :name
 
-  def initialize(file_name)
-    @file_name = file_name
+  def initialize(name)
+    @name = name
   end
 
   def hidden?
-    @file_name.start_with?('.')
+    @name.start_with?('.')
   end
 end
