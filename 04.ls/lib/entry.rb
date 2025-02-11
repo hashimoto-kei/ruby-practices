@@ -8,6 +8,6 @@ class Entry
   end
 
   def hidden?
-    @file_name =~ /^\..*/
+    @file_name.start_with?('.')
   end
 end
