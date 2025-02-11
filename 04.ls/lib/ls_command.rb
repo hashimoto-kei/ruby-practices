@@ -9,14 +9,14 @@ class LsCommand
   end
 
   def execute
-    entries = generate_entries
-    Formatter.format(entries)
+    files = generate_files
+    Formatter.format(files)
   end
 
   private
 
-  def generate_entries
-    entries = Dir.entries(@path).sort.map { |entry| LS::File.new(entry) }
-    entries.reject(&:hidden?)
+  def generate_files
+    files = Dir.entries(@path).sort.map { |entry| LS::File.new(entry) }
+    files.reject(&:hidden?)
   end
 end

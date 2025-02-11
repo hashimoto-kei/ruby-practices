@@ -4,8 +4,8 @@ class Formatter
   MAX_COLUMNS = 3
   BLANK = nil
 
-  def self.format(entries)
-    file_names = entries.map(&:file_name)
+  def self.format(files)
+    file_names = files.map(&:file_name)
     max_length = file_names.map(&:length).max
     file_names << BLANK until (file_names.size % MAX_COLUMNS).zero?
     row_size = file_names.size / MAX_COLUMNS
