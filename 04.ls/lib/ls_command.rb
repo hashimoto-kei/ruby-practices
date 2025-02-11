@@ -5,8 +5,7 @@ require_relative 'formatter'
 
 class LsCommand
   def initialize(path)
-    path ||= '.'
-    @path = File.expand_path(path)
+    @path = File.expand_path(path || '.')
   end
 
   def generate
