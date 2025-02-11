@@ -8,7 +8,7 @@ class LsCommand
     @path = File.expand_path(path || '.')
   end
 
-  def generate
+  def execute
     entries = generate_entries
     Formatter.format(entries)
   end

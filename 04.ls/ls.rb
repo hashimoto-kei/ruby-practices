@@ -5,4 +5,4 @@ require_relative 'lib/ls_command'
 
 path = ARGV[0]
 
-puts LsCommand.new(path).generate
+puts LsCommand.new(path).execute
