@@ -16,6 +16,6 @@ class LsCommand
 
   def generate_entries
     entries = Dir.entries(@path).sort.map { |entry| Entry.new("#{@path}/#{entry}") }
-    entries.filter { |entry| !entry.hidden? }
+    entries.reject(&:hidden?)
   end
 end
