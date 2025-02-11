@@ -14,6 +14,8 @@ class LsCommand
     Formatter.format(entries)
   end
 
+  private
+
   def generate_entries
     entries = Dir.entries(@path).sort.map { |entry| Entry.new("#{@path}/#{entry}") }
     entries.reject(&:hidden?)
