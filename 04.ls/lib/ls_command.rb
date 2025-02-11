@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'entry'
+require_relative 'file'
 require_relative 'formatter'
 
 class LsCommand
@@ -16,7 +16,7 @@ class LsCommand
   private
 
   def generate_entries
-    entries = Dir.entries(@path).sort.map { |entry| Entry.new(entry) }
+    entries = Dir.entries(@path).sort.map { |entry| LS::File.new(entry) }
     entries.reject(&:hidden?)
   end
 end

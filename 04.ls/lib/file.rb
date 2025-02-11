@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-class Entry
+module LS
+end
+
+class LS::File
   attr_reader :file_name
 
   def initialize(file_name)
