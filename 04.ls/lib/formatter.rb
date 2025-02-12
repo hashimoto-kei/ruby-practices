@@ -10,8 +10,7 @@ class Formatter
     names << BLANK until (names.size % MAX_COLUMNS).zero?
     row_size = names.size / MAX_COLUMNS
     rows = names.each_slice(row_size).to_a.transpose.map do |row|
-      row = row.compact.map { |name| name.ljust(max_length) }
-      row.join("\t")
+      row.compact.map { |name| name.ljust(max_length) }.join("\t")
     end
     rows.join("\n")
   end
