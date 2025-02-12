@@ -6,7 +6,7 @@ class Formatter
   def self.format(files)
     names = files.map(&:name)
     max_length = names.map(&:length).max
-    blanks = (MAX_COLUMNS - names.size % MAX_COLUMNS)
+    blanks = (MAX_COLUMNS - names.size) % MAX_COLUMNS
     names.push(*Array.new(blanks))
     row_size = names.size / MAX_COLUMNS
     rows = names.each_slice(row_size).to_a.transpose.map do |row|
