@@ -3,8 +3,8 @@
 class Formatter
   MAX_COLUMNS = 3
 
-  def self.format(files)
-    names = files.map(&:name)
+  def self.format(ls_files)
+    names = ls_files.map(&:name)
     max_length = names.map(&:length).max
     blanks = (MAX_COLUMNS - names.size) % MAX_COLUMNS
     names.push(*Array.new(blanks))
