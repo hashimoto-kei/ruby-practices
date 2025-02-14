@@ -9,8 +9,8 @@ class LsCommand
   end
 
   def execute
-    files = Dir.entries(@path).sort.map { |entry| LsFile.new(entry) }
-    files.reject!(&:hidden?)
-    Formatter.format(files)
+    ls_files = Dir.entries(@path).sort.map { |entry| LsFile.new(entry) }
+    ls_files.reject!(&:hidden?)
+    Formatter.format(ls_files)
   end
 end
