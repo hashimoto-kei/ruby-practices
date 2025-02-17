@@ -4,7 +4,7 @@
 require 'optparse'
 require_relative 'lib/ls_command'
 
-option = ARGV.getopts('a').transform_keys(&:to_sym)
+option = ARGV.getopts('a', symbolize_names: true)
 path = ARGV[0]
 
 LsCommand.new(path, option).execute
