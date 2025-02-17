@@ -4,9 +4,9 @@ require_relative 'ls_file'
 require_relative 'formatter'
 
 class LsCommand
-  def initialize(option, path)
-    @option = option
+  def initialize(path, option)
     @path = File.expand_path(path || '.')
+    @option = option
   end
 
   def execute
