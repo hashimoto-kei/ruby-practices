@@ -2,6 +2,7 @@
 
 require_relative 'ls_file'
 require_relative 'formatter'
+require_relative 'long_formatter'
 
 class LsCommand
   def initialize(path, option)
@@ -10,10 +11,10 @@ class LsCommand
   end
 
   def execute
-    ls_files = Dir.entries(@path).map { |entry| LsFile.new(entry) }
+    ls_files = Dir.entries(@path).map { |entry| LsFile.new("#{@path}/#{entry}") }
     filtered_ls_files = filter_ls_files(ls_files)
     sorted_ls_files = sort_ls_files(filtered_ls_files)
-    puts Formatter.format(sorted_ls_files)
+    puts formatter.format(sorted_ls_files)
   end
 
   private
@@ -25,5 +26,9 @@ class LsCommand
   def sort_ls_files(ls_files)
     sorted_ls_files = ls_files.sort_by(&:name)
     @option[:r] ? sorted_ls_files.reverse : sorted_ls_files
+  end
+
+  def formatter
+    @option[:l] ? LongFormatter : Formatter
   end
 end
