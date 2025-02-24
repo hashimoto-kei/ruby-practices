@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LongFormatter
+class LOptionFormatter
   SECONDS_IN_HALF_YEAR = (365 / 2) * 24 * 60 * 60
 
   class << self
