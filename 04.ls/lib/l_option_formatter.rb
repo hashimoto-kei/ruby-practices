@@ -11,7 +11,7 @@ class LOptionFormatter
     private
 
     def generate_header(ls_files)
-      total = ls_files.map(&:blocks).sum
+      total = ls_files.sum(&:blocks)
       "total #{total}"
     end
 
