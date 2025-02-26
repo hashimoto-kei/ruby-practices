@@ -11,7 +11,7 @@ class LsCommand
   end
 
   def execute
-    ls_files = Dir.entries(@path).map { |entry| LsFile.new("#{@path}/#{entry}") }
+    ls_files = Dir.entries(@path).map { |entry| LsFile.new(File.join(@path, entry)) }
     filtered_ls_files = filter_ls_files(ls_files)
     sorted_ls_files = sort_ls_files(filtered_ls_files)
     puts formatter.format(sorted_ls_files)
