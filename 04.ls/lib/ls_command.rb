@@ -5,9 +5,9 @@ require_relative 'formatter'
 require_relative 'l_option_formatter'
 
 class LsCommand
-  def initialize(path, option)
+  def initialize(path, options)
     @path = File.expand_path(path || '.')
-    @option = option
+    @options = options
   end
 
   def execute
@@ -20,15 +20,15 @@ class LsCommand
   private
 
   def filter_ls_files(ls_files)
-    @option[:a] ? ls_files : ls_files.reject(&:hidden?)
+    @options[:a] ? ls_files : ls_files.reject(&:hidden?)
   end
 
   def sort_ls_files(ls_files)
     sorted_ls_files = ls_files.sort_by(&:name)
-    @option[:r] ? sorted_ls_files.reverse : sorted_ls_files
+    @options[:r] ? sorted_ls_files.reverse : sorted_ls_files
   end
 
   def formatter
-    @option[:l] ? LOptionFormatter : Formatter
+    @options[:l] ? LOptionFormatter : Formatter
   end
 end
