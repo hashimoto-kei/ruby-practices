@@ -6,7 +6,7 @@ class LsFile
   FTYPE_TO_TYPE = {
     directory: 'd',
     file: '-',
-    link: 'l',
+    link: 'l'
   }.freeze
 
   def initialize(path)

@@ -38,7 +38,7 @@ class LongFormatter
           hard_links: ls_file.hard_links.to_s.length,
           owner_name: ls_file.owner_name.length,
           group_name: ls_file.group_name.length,
-          size: ls_file.size.to_s.length,
+          size: ls_file.size.to_s.length
         }
         widths.each_key { |key| max_widths[key] = widths[key] if max_widths[key] < widths[key] }
       end
