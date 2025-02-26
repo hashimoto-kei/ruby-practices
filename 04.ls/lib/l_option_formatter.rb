@@ -20,13 +20,15 @@ class LOptionFormatter
       max_widths = calculate_max_widths(ls_files, now)
       ls_files.map do |ls_file|
         formatted_file_name = format_file_name(ls_file.name, ls_file.link_name)
-        "#{ls_file.type}#{ls_file.mode}" \
-        "  #{ls_file.hard_links.to_s.rjust(max_widths[:hard_links])}" \
-        " #{ls_file.owner_name.ljust(max_widths[:owner_name])}" \
-        "  #{ls_file.group_name.ljust(max_widths[:group_name])}" \
-        "  #{ls_file.size.to_s.rjust(max_widths[:size])}" \
-        " #{ls_file.timestamp.strftime('%_m %_d %H:%M')}" \
-        " #{formatted_file_name}"
+        cols = []
+        cols << "#{ls_file.type}#{ls_file.mode}"
+        cols << " #{ls_file.hard_links.to_s.rjust(max_widths[:hard_links])}"
+        cols << ls_file.owner_name.ljust(max_widths[:owner_name])
+        cols << " #{ls_file.group_name.ljust(max_widths[:group_name])}"
+        cols << " #{ls_file.size.to_s.rjust(max_widths[:size])}"
+        cols << ls_file.timestamp.strftime('%_m %_d %H:%M')
+        cols << formatted_file_name
+        cols.join(' ')
       end
     end
 
