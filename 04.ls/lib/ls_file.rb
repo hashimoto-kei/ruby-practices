@@ -13,27 +13,28 @@ class LsFile
     socket: 's'
   }.freeze
 
-  attr_reader :name, :type, :mode, :hard_links, :owner_name, :group_name, :size, :timestamp, :link_name, :blocks
-
   def initialize(path)
-    @name = File.basename(path)
-    stat = File.lstat(path)
-    @type = FTYPE_TO_TYPE[stat.ftype.to_sym]
-    @mode = symbolize_mode(stat.mode.to_s(8)[-3..])
-    @hard_links = stat.nlink
-    @owner_name = Etc.getpwuid(stat.uid).name
-    @group_name = Etc.getgrgid(stat.gid).name
-    @size = stat.size
-    @timestamp = stat.mtime
-    @link_name = File.readlink(path) if File.symlink?(path)
-    @blocks = stat.blocks
+    @path = path
   end
 
+  def name = File.basename(@path)
+  def type = FTYPE_TO_TYPE[stat.ftype.to_sym]
+  def mode = symbolize_mode(stat.mode.to_s(8)[-3..])
+  def hard_links = stat.nlink
+  def owner_name = Etc.getpwuid(stat.uid).name
+  def group_name = Etc.getgrgid(stat.gid).name
+  def size = stat.size
+  def timestamp = stat.mtime
+  def link_name = (File.symlink?(@path) ? File.readlink(@path) : nil)
+  def blocks = stat.blocks
+
   def hidden?
-    @name.start_with?('.')
+    name.start_with?('.')
   end
 
   private
+
+  def stat = File.lstat(@path)
 
   def symbolize_mode(absolute_mode)
     absolute_mode
