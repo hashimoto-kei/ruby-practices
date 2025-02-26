@@ -25,11 +25,15 @@ class LsFile
   def group_name = Etc.getgrgid(stat.gid).name
   def size = stat.size
   def timestamp = stat.mtime
-  def link_name = (File.symlink?(@path) ? File.readlink(@path) : nil)
+  def link_name = symbolic_link? ? File.readlink(@path) : nil
   def blocks = stat.blocks
 
   def hidden?
     name.start_with?('.')
+  end
+
+  def symbolic_link?
+    File.symlink?(@path)
   end
 
   private

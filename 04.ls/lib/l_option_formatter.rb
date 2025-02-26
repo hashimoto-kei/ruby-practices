@@ -19,7 +19,6 @@ class LOptionFormatter
       now = Time.now
       max_widths = calculate_max_widths(ls_files, now)
       ls_files.map do |ls_file|
-        formatted_file_name = format_file_name(ls_file.name, ls_file.link_name)
         cols = []
         cols << "#{ls_file.type}#{ls_file.mode}"
         cols << " #{ls_file.hard_links.to_s.rjust(max_widths[:hard_links])}"
@@ -27,7 +26,8 @@ class LOptionFormatter
         cols << " #{ls_file.group_name.ljust(max_widths[:group_name])}"
         cols << " #{ls_file.size.to_s.rjust(max_widths[:size])}"
         cols << ls_file.timestamp.strftime('%_m %_d %H:%M')
-        cols << formatted_file_name
+        cols << ls_file.name
+        cols << "-> #{ls_file.link_name}" if ls_file.symbolic_link?
         cols.join(' ')
       end
     end
@@ -44,10 +44,6 @@ class LOptionFormatter
         widths.each_key { |key| max_widths[key] = widths[key] if max_widths[key] < widths[key] }
       end
       max_widths
-    end
-
-    def format_file_name(file_name, link_name)
-      link_name.nil? ? file_name : "#{file_name} -> #{link_name}"
     end
   end
 end
