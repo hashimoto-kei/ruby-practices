@@ -23,14 +23,8 @@ class LsFile
   def timestamp = stat.mtime
   def link_name = symbolic_link? ? File.readlink(@path) : nil
   def blocks = stat.blocks
-
-  def hidden?
-    name.start_with?('.')
-  end
-
-  def symbolic_link?
-    File.symlink?(@path)
-  end
+  def hidden? = name.start_with?('.')
+  def symbolic_link? = File.symlink?(@path)
 
   private
 
