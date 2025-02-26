@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LOptionFormatter
+class LongFormatter
   class << self
     def format(ls_files)
       header = generate_header(ls_files)

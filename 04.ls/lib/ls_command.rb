@@ -2,7 +2,7 @@
 
 require_relative 'ls_file'
 require_relative 'formatter'
-require_relative 'l_option_formatter'
+require_relative 'long_formatter'
 
 class LsCommand
   def initialize(path, options)
@@ -29,6 +29,6 @@ class LsCommand
   end
 
   def formatter
-    @options[:l] ? LOptionFormatter : Formatter
+    @options[:l] ? LongFormatter : Formatter
   end
 end
