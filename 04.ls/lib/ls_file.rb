@@ -4,13 +4,9 @@ require 'etc'
 
 class LsFile
   FTYPE_TO_TYPE = {
-    fifo: 'p',
-    characterSpecial: 'c',
     directory: 'd',
-    blockSpecial: 'b',
     file: '-',
     link: 'l',
-    socket: 's'
   }.freeze
 
   def initialize(path)
