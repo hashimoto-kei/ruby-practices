@@ -16,8 +16,7 @@ class LongFormatter
     end
 
     def generate_body(ls_files)
-      now = Time.now
-      max_widths = calculate_max_widths(ls_files, now)
+      max_widths = calculate_max_widths(ls_files)
       ls_files.map do |ls_file|
         cols = []
         cols << "#{ls_file.type}#{ls_file.mode}"
@@ -32,7 +31,7 @@ class LongFormatter
       end
     end
 
-    def calculate_max_widths(ls_files, now)
+    def calculate_max_widths(ls_files)
       max_widths = Hash.new(0)
       ls_files.each do |ls_file|
         widths = {
