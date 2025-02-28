@@ -28,7 +28,9 @@ class LsFile
 
   private
 
-  def stat = File.lstat(@path)
+  def stat
+    @stat ||= File.lstat(@path)
+  end
 
   def symbolize_mode(absolute_mode)
     absolute_mode
