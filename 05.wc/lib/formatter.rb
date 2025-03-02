@@ -4,7 +4,7 @@ class Formatter
   WIDTH = 7
 
   class << self
-    def format(wc_files)
+    def format(wc_files, options)
       total_counts = Hash.new(0)
       body = wc_files.map do |wc_file|
         counts = {
@@ -13,21 +13,22 @@ class Formatter
           characters: wc_file.count_characters
         }
         counts.each_key { |key| total_counts[key] += counts[key] }
-        generate_row(counts, wc_file.path)
+        generate_row(counts, wc_file.path, options)
       end
-      footer = generate_row(total_counts, 'total') if wc_files.size > 1
+      footer = generate_row(total_counts, 'total', options) if wc_files.size > 1
       [*body, footer].join("\n")
     end
 
     private
 
-    def generate_row(counts, file_path)
+    def generate_row(counts, file_path, options)
+      no_options = options.values.none?
       cols = []
-      cols << " #{counts[:lines].to_s.rjust(WIDTH)}"
-      cols << counts[:words].to_s.rjust(WIDTH)
-      cols << counts[:characters].to_s.rjust(WIDTH)
+      cols << counts[:lines].to_s.rjust(WIDTH) if no_options || options[:l]
+      cols << counts[:words].to_s.rjust(WIDTH) if no_options || options[:w]
+      cols << counts[:characters].to_s.rjust(WIDTH) if no_options || options[:c]
       cols << file_path
-      cols.join(' ')
+      ' ' + cols.join(' ')
     end
   end
 end
