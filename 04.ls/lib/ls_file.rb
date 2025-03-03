@@ -11,26 +11,23 @@ class LsFile
 
   def initialize(path)
     @path = path
+    @stat = File.lstat(path)
   end
 
   def name = File.basename(@path)
-  def type = FTYPE_TO_TYPE[stat.ftype.to_sym]
-  def mode = symbolize_mode(stat.mode.to_s(8)[-3..])
-  def hard_links = stat.nlink
-  def owner_name = Etc.getpwuid(stat.uid).name
-  def group_name = Etc.getgrgid(stat.gid).name
-  def size = stat.size
-  def timestamp = stat.mtime
+  def type = FTYPE_TO_TYPE[@stat.ftype.to_sym]
+  def mode = symbolize_mode(@stat.mode.to_s(8)[-3..])
+  def hard_links = @stat.nlink
+  def owner_name = Etc.getpwuid(@stat.uid).name
+  def group_name = Etc.getgrgid(@stat.gid).name
+  def size = @stat.size
+  def timestamp = @stat.mtime
   def link_name = symbolic_link? ? File.readlink(@path) : nil
-  def blocks = stat.blocks
+  def blocks = @stat.blocks
   def hidden? = name.start_with?('.')
   def symbolic_link? = File.symlink?(@path)
 
   private
-
-  def stat
-    @stat ||= File.lstat(@path)
-  end
 
   def symbolize_mode(absolute_mode)
     absolute_mode
