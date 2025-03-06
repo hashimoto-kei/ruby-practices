@@ -28,7 +28,7 @@ class Formatter
       cols << counts[:words].to_s.rjust(WIDTH) if no_options || options[:w]
       cols << counts[:characters].to_s.rjust(WIDTH) if no_options || options[:c]
       cols << file_path unless file_path.nil?
-      ' ' + cols.join(' ')
+      " #{cols.join(' ')}"
     end
   end
 end
