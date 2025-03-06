@@ -10,6 +10,7 @@ class WcCommand
   end
 
   def execute
+    @paths << nil if @paths.empty?
     wc_files = @paths.map { |path| WcFile.new(path) }
     puts Formatter.format(wc_files, @options)
   end

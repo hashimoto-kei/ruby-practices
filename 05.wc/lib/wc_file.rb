@@ -5,16 +5,11 @@ class WcFile
 
   def initialize(path)
     @path = path
+    $stdin = File.open(path) unless path.nil?
+    @lines = $stdin.readlines
   end
 
-  def count_lines = lines.size
-  def count_words = lines.sum { |line| line.split(/\s+/).size }
-  def count_characters = lines.sum(&:size)
-
-  private
-
-  def lines
-    return @lines if @lines
-    File.open(@path) { |file| @lines = File.readlines(file) }
-  end
+  def count_lines = @lines.size
+  def count_words = @lines.sum { |line| line.split(/\s+/).size }
+  def count_characters = @lines.sum(&:size)
 end
