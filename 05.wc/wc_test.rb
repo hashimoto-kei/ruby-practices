@@ -26,13 +26,13 @@ class WcTest < Minitest::Test
   end
 
   def test_wc_stdin
-    assert_equal `ls -l | wc `, `ls -l | ./wc.rb`
-    assert_equal `ls -l | wc -l`, `ls -l | ./wc.rb -l`
-    assert_equal `ls -l | wc -w`, `ls -l | ./wc.rb -w`
-    assert_equal `ls -l | wc -c`, `ls -l | ./wc.rb -c`
-    assert_equal `ls -l | wc -lw`, `ls -l | ./wc.rb -lw`
-    assert_equal `ls -l | wc -wc`, `ls -l | ./wc.rb -wc`
-    assert_equal `ls -l | wc -cl`, `ls -l | ./wc.rb -cl`
-    assert_equal `ls -l | wc -lwc`, `ls -l | ./wc.rb -lwc`
+    assert_equal `ls -l | wc `, `../04.ls/ls.rb -l | ./wc.rb`
+    assert_equal `ls -l | wc -l`, `../04.ls/ls.rb -l | ./wc.rb -l`
+    assert_equal `ls -l | wc -w`, `../04.ls/ls.rb -l | ./wc.rb -w`
+    assert_equal `ls -l | wc -c`, `../04.ls/ls.rb -l | ./wc.rb -c`
+    assert_equal `ls -l | wc -lw`, `../04.ls/ls.rb -l | ./wc.rb -lw`
+    assert_equal `ls -l | wc -wc`, `../04.ls/ls.rb -l | ./wc.rb -wc`
+    assert_equal `ls -l | wc -cl`, `../04.ls/ls.rb -l | ./wc.rb -cl`
+    assert_equal `ls -l | wc -lwc`, `../04.ls/ls.rb -l | ./wc.rb -lwc`
   end
 end
