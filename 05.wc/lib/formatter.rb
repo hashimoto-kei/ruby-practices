@@ -6,7 +6,7 @@ class Formatter
   class << self
     def format(wc_files, options)
       total_counts = Hash.new(0)
-      body = wc_files.map do |wc_file|
+      rows = wc_files.map do |wc_file|
         counts = {
           lines: wc_file.count_lines,
           words: wc_file.count_words,
@@ -16,7 +16,7 @@ class Formatter
         generate_row(counts, wc_file.path, options)
       end
       footer = generate_row(total_counts, 'total', options) if wc_files.size > 1
-      [*body, footer].join("\n")
+      [*rows, footer].join("\n")
     end
 
     private
